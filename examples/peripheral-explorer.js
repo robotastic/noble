@@ -1,7 +1,6 @@
 var async = require('async');
 var noble = require('../index');
 
-var peripheralIdOrAddress = process.argv[2].toLowerCase();
 
 noble.on('stateChange', function(state) {
   if (state === 'poweredOn') {
@@ -22,7 +21,7 @@ function checkAndAdd(address) {
 noble.on('discover', function(peripheral) {
   if (checkAndAdd(peripheral.address)) {
     noble.stopScanning();
-
+    console.log('\n---------------------------');
     console.log('peripheral with ID ' + peripheral.id + ' found');
     var advertisement = peripheral.advertisement;
 
@@ -63,6 +62,7 @@ function explore(peripheral) {
 
   peripheral.on('disconnect', function() {
     noble.startScanning();
+    console.log("Resuming scanning...");  
   });
 
   peripheral.connect(function(error) {
