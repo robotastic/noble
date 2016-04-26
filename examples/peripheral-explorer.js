@@ -75,15 +75,15 @@ function explore(peripheral) {
     });
 
     peripheral.connect(function (error) {
-        console.log("error1: " + error);
+        if (error) {console.log("error1: " + error);}
         if (!error) {
             peripheral.discoverServices([], function (error, services) {
                 var serviceIndex = 0;
                 console.log("\tServices discovered: " + services.length);
-                console.log("error2: " + error);
+                if (error) {console.log("error2: " + error);}
                 async.whilst(
                     function () {
-                        console.log("not there yet");
+                        
                         return (serviceIndex < services.length);
                     },
                     function (callback) {
@@ -97,11 +97,11 @@ function explore(peripheral) {
 
                         service.discoverCharacteristics([], function (error, characteristics) {
                             var characteristicIndex = 0;
-                            console.log("error3: " + error);
+                            if (error) {console.log("error3: " + error);}
                             console.log("\tCharecteristics discovered: " + characteristics.length);
                             async.whilst(
                                 function () {
-                                    console.log("still going");
+                                    
                                     return (characteristicIndex < characteristics.length);
                                 },
                                 function (callback) {
@@ -115,7 +115,7 @@ function explore(peripheral) {
                                     async.series([
                   function (callback) {
                                             characteristic.discoverDescriptors(function (error, descriptors) {
-                                                console.log("erro41: " + error);
+                                                if (error) {console.log("erro41: " + error);}
                                                 async.detect(
                                                     descriptors,
                                                     function (descriptor, callback) {
