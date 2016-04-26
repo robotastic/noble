@@ -67,6 +67,7 @@ function explore(peripheral) {
 
   peripheral.connect(function(error) {
       console.log("error1: " + error);
+      if (!error) {
     peripheral.discoverServices([], function(error, services) {
       var serviceIndex = 0;
         console.log("\tServices discovered: " + services.length);
@@ -157,10 +158,14 @@ function explore(peripheral) {
           });
         },
         function (err) {
-          peripheral.disconnect();
+          
         }
       );
     });
+            } else {
+      peripheral.disconnect();               
+                     }
   });
+
 }
 
