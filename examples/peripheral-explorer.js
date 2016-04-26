@@ -68,9 +68,10 @@ function explore(peripheral) {
   peripheral.connect(function(error) {
     peripheral.discoverServices([], function(error, services) {
       var serviceIndex = 0;
-
+        console.log("\tServices discovered: " + services.length);
       async.whilst(
         function () {
+            console.log("not there yet");
           return (serviceIndex < services.length);
         },
         function(callback) {
@@ -84,9 +85,10 @@ function explore(peripheral) {
 
           service.discoverCharacteristics([], function(error, characteristics) {
             var characteristicIndex = 0;
-
+              console.log("\tCharecteristics discovered: " + characteristics.length);
             async.whilst(
               function () {
+                  console.log("still going");
                 return (characteristicIndex < characteristics.length);
               },
               function(callback) {
