@@ -167,7 +167,7 @@ function explore(peripheral) {
                         });
                     },
                     function (err) {
-
+                        peripheral.disconnect();
                     }
                 );
             });
