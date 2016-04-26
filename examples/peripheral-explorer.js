@@ -10,9 +10,17 @@ noble.on('stateChange', function(state) {
     noble.stopScanning();
   }
 });
+var arr=[];
+function checkAndAdd(address) {
+  var id = arr.length + 1;
+  var found = arr.some(function (el) {
+    return el.address === address;
+  });
+  if (!found) { arr.push({ id: id, address: address });return true; } else {return false;}
+}
 
 noble.on('discover', function(peripheral) {
-  if (peripheral.id === peripheralIdOrAddress || peripheral.address === peripheralIdOrAddress) {
+  if (checkAndAdd(peripheral.address)) {
     noble.stopScanning();
 
     console.log('peripheral with ID ' + peripheral.id + ' found');
@@ -54,7 +62,7 @@ function explore(peripheral) {
   console.log('services and characteristics:');
 
   peripheral.on('disconnect', function() {
-    process.exit(0);
+    noble.startScanning();
   });
 
   peripheral.connect(function(error) {
